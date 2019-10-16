@@ -44,5 +44,26 @@ View(realData)
 
 
 # PREPROCESAMIENTO #
+  # Minusculas
+realData$text <- tolower(realData$text)
+
+  # Lista de stopwords y caracteres especiales
+stopWords <- stopwords(kind = "es")
+caracteresEspeciales <- c("'", "@", "#", "rt")
+
+  # Removición de caracteres especiales
+for (i in 1:length(caracteresEspeciales)){
+  caracEsp <- caracteresEspeciales[i]
+  realData$text <- gsub(caracEsp, "", realData$text)
+}
+
+  # Removición de urls
+realData$text<- gsub('http\\S+\\s*', '', realData$text)
+
+
+  # Removición de stopwords, signos de puntuación y numeros
+realData$text <- removeWords(realData$text, stopWords)
+realData$text <- removePunctuation(realData$text)
+realData$text <- removeNumbers(realData$text)
 
 
