@@ -44,53 +44,29 @@ View(realData)
 
 
 # PREPROCESAMIENTO #
-  # Minusculas
+
+
+#----------------- LIMPIEZA -----------------#
+
+# Minusculas
 realData$text <- tolower(realData$text)
 
-  # Lista de stopwords y caracteres especiales
+# Lista de stopwords y caracteres especiales
 stopWords <- stopwords(kind = "es")
 caracteresEspeciales <- c("'", "@", "#", "rt")
 
-  # Removición de caracteres especiales
+# Removición de caracteres especiales
 for (i in 1:length(caracteresEspeciales)){
   caracEsp <- caracteresEspeciales[i]
   realData$text <- gsub(caracEsp, "", realData$text)
 }
 
-  # Removición de urls
+# Removición de urls
 realData$text<- gsub('http\\S+\\s*', '', realData$text)
 
 
-  # Removición de stopwords, signos de puntuación y numeros
+# Removición de stopwords, signos de puntuación y numeros
 realData$text <- removeWords(realData$text, stopWords)
 realData$text <- removePunctuation(realData$text)
 realData$text <- removeNumbers(realData$text)
-
-#----------------- LIMPIEZA -----------------#
-# To lower
-
-realData$text <- tolower(realData$text)
-
-# reemplazar caracteres
-data$reviews.text <- gsub("@", "", data$reviews.text)
-data$reviews.text <- gsub("#", "", data$reviews.text)
-data$reviews.text <- gsub("'", "", data$reviews.text)
-
-data$reviews.title <- gsub("@", "", data$reviews.title)
-data$reviews.title <- gsub("#", "", data$reviews.title)
-data$reviews.title <- gsub("'", "", data$reviews.title)
-
-# Quitar stopwords, signos de puntuacion
-stopWords <- stopwords(kind = "en")
-
-data$reviews.text <- removeWords(data$reviews.text, stopWords)
-data$reviews.text <- removePunctuation(data$reviews.text)
-data$reviews.text <- removeNumbers(data$reviews.text)
-
-data$reviews.title <- removeWords(data$reviews.title, stopWords)
-data$reviews.title <- removePunctuation(data$reviews.title)
-data$reviews.title <- removeNumbers(data$reviews.title)
-
-# Quitar urls
-data$reviews.text<- gsub('http\\S+\\s*', '', data$reviews.text)
 
