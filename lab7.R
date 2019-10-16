@@ -51,25 +51,23 @@ View(realData)
 realData$text <- tolower(realData$text)
 
 # reemplazar caracteres
-data$reviews.text <- gsub("@", "", data$reviews.text)
-data$reviews.text <- gsub("#", "", data$reviews.text)
-data$reviews.text <- gsub("'", "", data$reviews.text)
-
-data$reviews.title <- gsub("@", "", data$reviews.title)
-data$reviews.title <- gsub("#", "", data$reviews.title)
-data$reviews.title <- gsub("'", "", data$reviews.title)
+realData$text <-gsub("@", "", realData$text)
+realData$text <-gsub("#", "", realData$text)
+realData$text <-gsub("'", "", realData$text)
+realData$text <-gsub("|", "", realData$text)
+realData$text <-gsub("rt", "", realData$text)
 
 # Quitar stopwords, signos de puntuacion
-stopWords <- stopwords(kind = "en")
+stopWords <- stopwords(kind = "es")
 
-data$reviews.text <- removeWords(data$reviews.text, stopWords)
-data$reviews.text <- removePunctuation(data$reviews.text)
-data$reviews.text <- removeNumbers(data$reviews.text)
-
-data$reviews.title <- removeWords(data$reviews.title, stopWords)
-data$reviews.title <- removePunctuation(data$reviews.title)
-data$reviews.title <- removeNumbers(data$reviews.title)
+realData$text <- removeWords(realData$text, stopWords)
+realData$text <- removePunctuation(realData$text)
+realData$text<- removeNumbers(realData$text)
 
 # Quitar urls
-data$reviews.text<- gsub('http\\S+\\s*', '', data$reviews.text)
+realData$text<- gsub('http\\S+\\s*', '', realData$text)
+
+
+# --------------- fin de limpieza ---------------- #
+
 
