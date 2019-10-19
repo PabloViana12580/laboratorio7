@@ -12,11 +12,14 @@ install.packages("twitteR")
 install.packages("RCurl")
 install.packages("wordcloud")
 install.packages("tm")
+install.packages("sentimentr")
 
 library(twitteR)
 library(RCurl)
 library(wordcloud)
 library(tm)
+library(sentimentr)
+library(dplyr)
 
 setup_twitter_oauth(consumerKey,consumerSecret,accessToken,accessTokenSecret)
 tweets<-searchTwitteR("traficogt",n=150,lang = "es")
@@ -74,3 +77,23 @@ realData$text <- removeNumbers(realData$text)
 
 # Wordcloud
 wordcloud(realData$text, min.freq = 10, col=terrain.colors(10))
+
+# Sentiment analysis
+testData<-realData
+
+testData$text<-as.character(testData$text)
+
+hola<-testData
+
+hola<-na.omit(hola)
+
+hola$sentiment<-""
+hola$postiveWords<-""
+hola$negativeWords<-""
+
+var<-sentiment(hola$text)
+hola$sentiment<-var$sentiment
+
+var2<-extract_sentiment_terms(hola$text)
+hola$postiveWords<-var2$positive
+hola$negativeWords<-var2$negative
