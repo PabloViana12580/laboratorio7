@@ -18,11 +18,6 @@ library(RCurl)
 library(wordcloud)
 library(tm)
 
-consumerKey<-"DQlyuJkQhLr7DFvWdZORvGnor"
-consumerSecret<-"ObizzJtiNKsMaKYPXM48RVIABCA1xdmKk0bXwLDcFnBFfaXfJV"
-accessToken <-	"239983021-oV2kHZ7GzoK2MCrVDCXRoYt9Phwf7SUTkLnBino3"
-accessTokenSecret <-	"z8J4KUsEl4kaT4Sycg2DwVsKaoOTWd4LF7lHxuG8Z1t6X"
-
 setup_twitter_oauth(consumerKey,consumerSecret,accessToken,accessTokenSecret)
 tweets<-searchTwitteR("traficogt",n=150,lang = "es")
 tweetdf<-twListToDF(tweets)
