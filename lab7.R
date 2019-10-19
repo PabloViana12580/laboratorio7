@@ -53,7 +53,7 @@ realData$text <- tolower(realData$text)
 
 # Lista de stopwords y caracteres especiales
 stopWords <- stopwords(kind = "es")
-caracteresEspeciales <- c("'", "@", "#", "rt")
+caracteresEspeciales <- c("'", "@", "#", "rt", "\n", ",","…", '"')
 
 # Removici?n de caracteres especiales
 for (i in 1:length(caracteresEspeciales)){
@@ -68,7 +68,26 @@ realData$text<- gsub('http\\S+\\s*', '', realData$text)
 # Removici?n de stopwords, signos de puntuaci?n y numeros
 realData$text <- removeWords(realData$text, stopWords)
 realData$text <- removePunctuation(realData$text)
+?removePunctuation()
 realData$text <- removeNumbers(realData$text)
 
 
 # --------------- fin de limpieza ---------------- #
+
+
+
+
+###### insights y hallazgos #######
+install.packages("corpus")
+library("corpus")
+
+words<-realData$text
+View(realData)
+View(words)
+wordcloud(words)
+
+dfCorpus = Corpus(VectorSource(realData)) 
+inspect(dfCorpus)
+
+tokens<-Token_Tokenizer(dfCorpus)
+term_stats(dfCorpus)
