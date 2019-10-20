@@ -20,6 +20,7 @@ library(wordcloud)
 library(tm)
 library(sentimentr)
 library(dplyr)
+library(corrplot)
 
 setup_twitter_oauth(consumerKey,consumerSecret,accessToken,accessTokenSecret)
 tweets<-searchTwitteR("traficogt",n=150,lang = "es")
@@ -70,7 +71,6 @@ realData$text<- gsub('http\\S+\\s*', '', realData$text)
 # Removici?n de stopwords, signos de puntuaci?n y numeros
 realData$text <- removeWords(realData$text, stopWords)
 realData$text <- removePunctuation(realData$text)
-?removePunctuation()
 realData$text <- removeNumbers(realData$text)
 
 
@@ -113,3 +113,26 @@ hola$sentiment<-var$sentiment
 var2<-extract_sentiment_terms(hola$text)
 hola$postiveWords<-var2$positive
 hola$negativeWords<-var2$negative
+
+# Analisis exploratorio
+data.exp <- data
+
+data.exp <- subset(data.exp, select = c("favorited", "favoriteCount", "truncated", "retweetCount", "isRetweet"))
+
+data.exp$favorited <- as.factor(data.exp$favorited)
+data.exp$favoriteCount <- as.factor(data.exp$favoriteCount)
+data.exp$truncated <- as.factor(data.exp$truncated)
+data.exp$retweetCount <- as.factor(data.exp$retweetCount)
+data.exp$isRetweet <- as.factor(data.exp$isRetweet)
+
+data.exp$favorited <- as.numeric(data.exp$favorited)
+data.exp$favoriteCount <- as.numeric(data.exp$favoriteCount)
+data.exp$truncated <- as.numeric(data.exp$truncated)
+data.exp$retweetCount <- as.numeric(data.exp$retweetCount)
+data.exp$isRetweet <- as.numeric(data.exp$isRetweet)
+
+compPrinc<-prcomp(data.exp)
+compPrincPCA<-PCA(data.exp[,-1],ncp=ncol(data.exp[,-1]), scale.unit = T)
+var<-get_pca_var(compPrincPCA)
+corrplot(var$cos2)
+
